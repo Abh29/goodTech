@@ -21,10 +21,34 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::group(['middleware' => 'auth'], function () {
 
-Auth::routes();
+    Route::group(
+        [
+            'middleware' => 'is_admin',
+            'prefix' => 'admin',
+            'as' => 'admin.'
+        ],
+        function () {
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+            Route::get('feedbacks', [\App\Http\Controllers\Admin\FeedbachController::class, 'index'])->name('feedbacks.index');
+
+
+        });
+
+    Route::group(
+        [
+            'prefix' => 'user',
+            'as' => 'user.'
+        ],
+        function () {
+
+            Route::get('feedbacks', [\App\Http\Controllers\Client\FeedbachController::class, 'index'])->name('feedbacks.index');
+
+        });
+
+});
+
+
+
