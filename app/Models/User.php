@@ -46,4 +46,9 @@ class User extends Authenticatable
         return false;
     }
 
+    public function feedbacks() : \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Feedback::class, 'user_id');
+    }
+
 }

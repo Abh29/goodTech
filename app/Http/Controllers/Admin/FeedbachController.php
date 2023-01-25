@@ -14,7 +14,7 @@ class FeedbachController extends Controller
      */
     public function index()
     {
-        //
+        return view('admin.feedback.index');
     }
 
     /**

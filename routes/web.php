@@ -21,7 +21,6 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-
 Route::group(['middleware' => 'auth'], function () {
 
     Route::group(
@@ -33,18 +32,20 @@ Route::group(['middleware' => 'auth'], function () {
         function () {
 
             Route::get('feedbacks', [\App\Http\Controllers\Admin\FeedbachController::class, 'index'])->name('feedbacks.index');
-
+            Route::get('feedbacks/{home?}', [\App\Http\Controllers\Admin\FeedbachController::class, 'index'])->name('home');
 
         });
 
     Route::group(
         [
-            'prefix' => 'user',
+            'middleware' => 'is_client',
             'as' => 'user.'
         ],
         function () {
 
-            Route::get('feedbacks', [\App\Http\Controllers\Client\FeedbachController::class, 'index'])->name('feedbacks.index');
+            Route::get('feedbacks', [\App\Http\Controllers\Client\FeedbachController::class, 'create'])->name('feedbacks.index');
+            Route::get('feedbacks/{home?}', [\App\Http\Controllers\Client\FeedbachController::class, 'create'])->name('home');
+            Route::post('feedbacks', [\App\Http\Controllers\Client\FeedbachController::class, 'store'])->name('feedbacks.create');
 
         });
 
