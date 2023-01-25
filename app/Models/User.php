@@ -43,12 +43,18 @@ class User extends Authenticatable
     ];
 
     public function canCreateFeed() : bool {
-        return false;
+        if (!auth() || auth()->user()->role_id != Role::IS_CLIENT)
+            return false;
+        return auth()->user()->latestFeedback->created_at->diffInHours(now()) > 23;
     }
 
     public function feedbacks() : \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Feedback::class, 'user_id');
+    }
+
+    public function latestFeedback() {
+        return $this->hasOne(Feedback::class, 'user_id')->latestOfMany();
     }
 
 }

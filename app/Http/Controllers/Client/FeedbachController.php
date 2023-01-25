@@ -18,7 +18,7 @@ class FeedbachController extends Controller
      */
     public function create(Request $request)
     {
-        return view('client.feedback.index');
+        return view('client.feedback.index', ['FeedbackClass' => Feedback::class]);
     }
 
     /**
@@ -29,6 +29,8 @@ class FeedbachController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('create', Feedback::class);
+
         $data = $request->validate([
             'subject' => 'required|max:255',
             'message' => 'required|max:1000',
@@ -40,7 +42,6 @@ class FeedbachController extends Controller
         $feed->subject = $data['subject'];
         $feed->message = $data['message'];
         $feed->user_id = auth()->user()->id;
-
         if ($request->hasFile('attachment')) {
             $path = $request->file('attachment')->store('attachments', 'public');
             $feed->attachment = $path;

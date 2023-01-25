@@ -8,9 +8,19 @@
                     <div class="card-header">{{ __('Add a Feedback') }}</div>
 
                     <div class="card-body">
-
                         <form method="POST" action="{{ route('user.feedbacks.create') }}" enctype="multipart/form-data">
                             @csrf
+
+                            @cannot('create', $FeedbackClass)
+                                <div class="row mb-3">
+                                    <div class="col-md-10 offset-md-1">
+                                        <div class="alert alert-danger" role="alert">
+                                            {{_('You cannot create a new feedback, you have reached the limit for today!')}}
+                                        </div>
+                                    </div>
+                                </div>
+                            @endcannot
+
                             <div class="row mb-3">
                                 <div class="col-md-10 offset-md-1">
                                     <input id="subject" type="text" class="form-control @error('subject') is-invalid @enderror" name="subject"
@@ -49,7 +59,7 @@
 
                             <div class="row mb-0">
                                 <div class="col-md-6 offset-md-4">
-                                    <button type="submit" class="btn btn-primary">
+                                    <button type="submit" class="btn btn-primary @cannot('create', $FeedbackClass) disabled @endcannot">
                                         {{ __('Send a Feedback') }}
                                     </button>
                                 </div>
