@@ -11,6 +11,15 @@
                         <form method="POST" action="{{ route('user.feedbacks.create') }}" enctype="multipart/form-data">
                             @csrf
 
+                            @if (session('success'))
+                                <div class="row mb-1">
+                                    <div class="col-md-10 offset-md-1">
+                                        <div class="alert alert-success" role="alert">
+                                            {{ session('success') }}
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
                             @cannot('create', $FeedbackClass)
                                 <div class="row mb-3">
                                     <div class="col-md-10 offset-md-1">

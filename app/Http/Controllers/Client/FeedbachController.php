@@ -53,7 +53,7 @@ class FeedbachController extends Controller
         $feed->save();
         MailSenderJob::dispatch(env('ADMIN_EMAIL'), new NewFeedback($feed))->delay(now()->addMinutes(1));
 
-        return back();
+        return back()->with('success', 'You feedback have been sent, you will recieve a confirming email shortly !');;
     }
 
 }
