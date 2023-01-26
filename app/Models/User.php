@@ -45,6 +45,8 @@ class User extends Authenticatable
     public function canCreateFeed() : bool {
         if (!auth() || auth()->user()->role_id != Role::IS_CLIENT)
             return false;
+        if (count(auth()->user()->feedbacks) < 1)
+            return true;
         return auth()->user()->latestFeedback->created_at->diffInHours(now()) > 23;
     }
 

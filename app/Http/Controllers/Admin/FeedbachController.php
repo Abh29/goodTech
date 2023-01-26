@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\MailSenderJob;
 use App\Mail\FeedbackProcessed;
 use App\Mail\NewFeedback;
 use App\Models\Feedback;
@@ -40,7 +41,7 @@ class FeedbachController extends Controller
         if ($feed){
             $feed->processed = true;
             $feed->save();
-            Mail::to($feed->user->email)->send(new FeedbackProcessed($feed));
+            MailSenderJob::dispatch($feed->user->email, new FeedbackProcessed($feed))->delay(now()->addMinutes(1));
         }
         return back();
     }
