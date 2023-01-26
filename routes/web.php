@@ -15,11 +15,15 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('wellcome');
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', function () {
+    return redirect(\route('user.home'));
+})->name('home');
+
+
 
 Route::group(['middleware' => 'auth'], function () {
 
@@ -33,6 +37,8 @@ Route::group(['middleware' => 'auth'], function () {
 
             Route::get('feedbacks', [\App\Http\Controllers\Admin\FeedbachController::class, 'index'])->name('feedbacks.index');
             Route::get('feedbacks/{home?}', [\App\Http\Controllers\Admin\FeedbachController::class, 'index'])->name('home');
+            Route::post('feedback/process/{id}', [\App\Http\Controllers\Admin\FeedbachController::class, 'process'])->name('feedbacks.process');
+            Route::post('feedback/delete/{id}', [\App\Http\Controllers\Admin\FeedbachController::class, 'destroy'])->name('feedbacks.delete');
 
         });
 

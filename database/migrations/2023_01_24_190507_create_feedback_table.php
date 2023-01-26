@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('subject');
             $table->string('attachment')->nullable();
             $table->text('message');
+            $table->boolean('processed')->default(false);
             $table->timestamps();
         });
     }

@@ -20,7 +20,7 @@ class FeedbackPolicy
      */
     public function viewAny(User $user)
     {
-        return true;
+        return $user->role_id == Role::IS_ADMIN;
     }
 
     /**
@@ -32,7 +32,7 @@ class FeedbackPolicy
      */
     public function view(User $user, Feedback $feedback)
     {
-        return true;
+        return $user->role_id == Role::IS_ADMIN || (auth() && auth()->user()->id == $feedback->user->id);
     }
 
     /**
@@ -95,4 +95,9 @@ class FeedbackPolicy
     {
         return $user->role_id == Role::IS_ADMIN;
     }
+
+    public function process(User $user, Feedback $feedback) {
+        return $user->role_id == Role::IS_ADMIN && !$feedback->processed;
+    }
+
 }

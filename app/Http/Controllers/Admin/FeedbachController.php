@@ -3,7 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Mail\FeedbackProcessed;
+use App\Mail\NewFeedback;
+use App\Models\Feedback;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class FeedbachController extends Controller
 {
@@ -14,28 +18,8 @@ class FeedbachController extends Controller
      */
     public function index()
     {
-        return view('admin.feedback.index');
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
+        $feeds = Feedback::orderBy('created_at', 'DESC')->paginate(10);
+        return view('admin.feedback.index', ['feedbacks' => $feeds]);
     }
 
     /**
@@ -49,27 +33,16 @@ class FeedbachController extends Controller
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    public function process($id)
     {
-        //
+        $feed = Feedback::find($id);
+        if ($feed){
+            $feed->processed = true;
+            $feed->save();
+            Mail::to($feed->user->email)->send(new FeedbackProcessed($feed));
+        }
+        return back();
     }
 
     /**
@@ -80,6 +53,7 @@ class FeedbachController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Feedback::destroy($id);
+        return back();
     }
 }

@@ -14,7 +14,7 @@ class FeedbachController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function create(Request $request)
     {
@@ -48,6 +48,7 @@ class FeedbachController extends Controller
         }
 
         $feed->save();
+
 
         return back();
     }

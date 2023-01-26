@@ -9,7 +9,7 @@ class Feedback extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', 'subject', 'message', 'attachment'];
+    protected $fillable = ['user_id', 'subject', 'message', 'attachment', 'processed'];
 
 
     public function user() : \Illuminate\Database\Eloquent\Relations\BelongsTo

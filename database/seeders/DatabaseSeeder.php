@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Feedback;
 use App\Models\Role;
 use Illuminate\Database\Seeder;
 use App\Models\User;
@@ -22,5 +23,8 @@ class DatabaseSeeder extends Seeder
             RoleSeeder::class,
             UserSeeder::class,
         ]);
+
+        User::factory(50)->create();
+        Feedback::factory(500)->create();
     }
 }
