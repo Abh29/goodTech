@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\MailSenderJob;
+use App\Mail\NewFeedback;
 use App\Models\Feedback;
 use App\Rules\RestrictedFiles;
 use Illuminate\Http\Request;
@@ -31,6 +33,7 @@ class FeedbachController extends Controller
     {
         $this->authorize('create', Feedback::class);
 
+
         $data = $request->validate([
             'subject' => 'required|max:255',
             'message' => 'required|max:1000',
@@ -48,7 +51,7 @@ class FeedbachController extends Controller
         }
 
         $feed->save();
-
+        MailSenderJob::dispatch(env('ADMIN_EMAIL'), new NewFeedback($feed))->delay(now()->addMinutes(1));
 
         return back();
     }
