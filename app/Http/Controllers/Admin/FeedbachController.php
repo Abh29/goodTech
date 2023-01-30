@@ -14,23 +14,55 @@ class FeedbachController extends Controller
 {
     /**
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function index(Request $request)
     {
         $perPage = $request->perPage ?? 10;
-        $feeds = Feedback::orderBy('created_at', 'DESC')->paginate($perPage);
+        $orderQ = $request->order ?? 1;
+        $desc = $request->desc ?? 0;
+        $direction = $desc == 1? 'desc' : 'asc';
+        $column = '';
+
+        switch ($orderQ) {
+            case 1:
+                $column = 'user_id';
+                break;
+            case 2:
+                $column = 'user_created_at';
+                break;
+            case 3:
+               $column = 'created_at';
+                break;
+            case 4:
+                $column = 'username';
+                break;
+            case 5:
+                $column = 'email';
+                break;
+        }
+
+        $feeds = Feedback::leftjoin('users', 'users.id', '=', 'feedback.user_id')
+            ->select([
+                'feedback.*',
+                'users.email as email',
+                'users.name as username',
+                'users.created_at as user_created_at',
+            ])->orderby($column, $direction)->paginate($perPage);
+
 
         if ($request->ajax())
             return view('admin.feedback.partials.feedbacksTable', [
                 'feedbacks' => $feeds,
                 'perPage' => $perPage,
+                'order' => $orderQ,
+                'desc' => $desc,
             ])->render();
 
         return view('admin.feedback.index', [
             'feedbacks' => $feeds,
             'perPage' => $perPage,
+            'order' => $orderQ,
+            'desc' => $desc,
             ]);
     }
 
