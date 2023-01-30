@@ -19,11 +19,18 @@ class FeedbachController extends Controller
      */
     public function index(Request $request)
     {
-        $perpage = $request->perpage ?? 10;
-        $feeds = Feedback::orderBy('created_at', 'DESC')->paginate($perpage);
+        $perPage = $request->perPage ?? 10;
+        $feeds = Feedback::orderBy('created_at', 'DESC')->paginate($perPage);
+
+        if ($request->ajax())
+            return view('admin.feedback.partials.feedbacksTable', [
+                'feedbacks' => $feeds,
+                'perPage' => $perPage,
+            ])->render();
+
         return view('admin.feedback.index', [
             'feedbacks' => $feeds,
-            'perpage' => $perpage,
+            'perPage' => $perPage,
             ]);
     }
 
