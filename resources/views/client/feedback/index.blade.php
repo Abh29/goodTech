@@ -43,10 +43,10 @@
                             </div>
 
                             <div class="row mb-3">
-
                                 <div class="col-md-10 offset-md-1">
-                                    <textarea id="message" name="message" class="form-control @error('message') is-invalid @enderror" value="{{old('message')}}"
-                                              required autofocus maxlength="1000" placeholder="{{_('Message Text')}}" rows="6"></textarea>
+                                    <textarea id="message" name="message" class=" form-control @error('message') is-invalid @enderror "
+                                              placeholder="{{_('Message')}}"
+                                              required autofocus maxlength="1000" rows="6">{{ old('message') }}</textarea>
                                     @error('message')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>

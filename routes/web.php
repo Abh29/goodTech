@@ -14,13 +14,14 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+//    return view('welcome');
+    return redirect(route('user.home'));
 })->name('wellcome');
 
 Auth::routes();
 
 Route::get('/home', function () {
-    return redirect(\route('user.home'));
+    return redirect(route('user.home'));
 })->name('home');
 
 
