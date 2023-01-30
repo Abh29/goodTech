@@ -11,11 +11,11 @@
         <div class="card p-0">
             <div class="card-header">
                 <div class="row">
-                    <div class="col-1 justify-content-center text-center"><a href="{{$currentUrl . '&order=1'}}@if($order == 1) &desc={{!$desc}} @else &desc=0 @endif">{{_('User id')}}</a></div>
-                    <div class="col-2 justify-content-center text-center"><a href="{{$currentUrl . '&order=2'}}@if($order == 2) &desc={{!$desc}} @else &desc=0 @endif">{{_('User creation time')}}</a></div>
-                    <div class="col-2 justify-content-center text-center"><a href="{{$currentUrl . '&order=3'}}@if($order == 3) &desc={{!$desc}} @else &desc=0 @endif">{{_('Feedback creation time')}}</a></div>
-                    <div class="col-1 justify-content-center text-center"><a href="{{$currentUrl . '&order=4'}}@if($order == 4) &desc={{!$desc}} @else &desc=0 @endif">{{_('Username')}}</a></div>
-                    <div class="col-2 justify-content-center text-center"><a href="{{$currentUrl . '&order=5'}}@if($order == 5) &desc={{!$desc}} @else &desc=0 @endif">{{_('Email')}}</a></div>
+                    <div class="col-1 justify-content-center text-center"><a @if($order != 1)class="text-decoration-none" @endif href="{{$currentUrl . '&order=1'}}@if($order == 1) &desc={{!$desc}} @else &desc=0 @endif">{{_('User id')}}</a></div>
+                    <div class="col-2 justify-content-center text-center"><a @if($order != 2)class="text-decoration-none" @endif href="{{$currentUrl . '&order=2'}}@if($order == 2) &desc={{!$desc}} @else &desc=0 @endif">{{_('User creation time')}}</a></div>
+                    <div class="col-2 justify-content-center text-center"><a @if($order != 3)class="text-decoration-none" @endif href="{{$currentUrl . '&order=3'}}@if($order == 3) &desc={{!$desc}} @else &desc=0 @endif">{{_('Feedback creation time')}}</a></div>
+                    <div class="col-1 justify-content-center text-center"><a @if($order != 4)class="text-decoration-none" @endif href="{{$currentUrl . '&order=4'}}@if($order == 4) &desc={{!$desc}} @else &desc=0 @endif">{{_('Username')}}</a></div>
+                    <div class="col-2 justify-content-center text-center"><a @if($order != 5)class="text-decoration-none" @endif href="{{$currentUrl . '&order=5'}}@if($order == 5) &desc={{!$desc}} @else &desc=0 @endif">{{_('Email')}}</a></div>
                     <div class="col-3 justify-content-center text-center">{{_('Subject')}}</div>
                     <div class="col-1"></div>
                 </div>
