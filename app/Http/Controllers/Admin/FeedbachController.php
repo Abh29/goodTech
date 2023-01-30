@@ -15,12 +15,16 @@ class FeedbachController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function index()
+    public function index(Request $request)
     {
-        $feeds = Feedback::orderBy('created_at', 'DESC')->paginate(10);
-        return view('admin.feedback.index', ['feedbacks' => $feeds]);
+        $perpage = $request->perpage ?? 10;
+        $feeds = Feedback::orderBy('created_at', 'DESC')->paginate($perpage);
+        return view('admin.feedback.index', [
+            'feedbacks' => $feeds,
+            'perpage' => $perpage,
+            ]);
     }
 
     /**

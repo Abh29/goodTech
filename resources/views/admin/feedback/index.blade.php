@@ -7,7 +7,6 @@
     <div class="container">
         <div class="row justify-content-center">
 
-
             <div class="card p-0">
                 <div class="card-header">
                     <div class="row">
@@ -83,15 +82,38 @@
 
                 <div class="card-footer">
                     <div class="row">
-                        {{$feedbacks->links('partials.pagination')}}
+                        <div class="col-8">
+                            <div>
+                                {{$feedbacks->appends(compact('perpage'))->links('pagination::bootstrap-4')}}
+                            </div>
+                        </div>
+                        <div class="col-1">
+                            <label>Per-page: </label>
+                        </div>
+                        <div class="col-3">
+                            <form id="perpage-form" class="form-inline" method="GET" role="form" action="">
+                                <div class="form-group">
+                                    <select class="form-control" id="perPage-select" name="perPage">
+                                        <option value="10" @if($perpage == 10) selected @endif >10</option>
+                                        <option value="50" @if($perpage == 50) selected @endif >50</option>
+                                        <option value="100" @if($perpage == 100) selected @endif >100</option>
+                                    </select>
+                                </div>
+                            </form>
+                        </div>
+
                     </div>
                 </div>
             </div>
 
-
-
-
-
         </div>
     </div>
+@endsection
+
+@section('js')
+    <script>
+        document.getElementById('perPage-select').onchange = function() {
+            window.location = "{!! $feedbacks->url(1) !!}&perpage=" + this.value;
+        };
+    </script>
 @endsection
