@@ -1,13 +1,11 @@
 $(document).ready(function(){
     console.log('document ready!');
 
-    $('#perPage-select').on('change', function () {
+    $(document).on('change', '#perPage-select', function(event){
         let perPage = $(this).val();
-        let url = '/admin/feedbacks?page=1&perPage=' + perPage;
+        let url = '/admin/feedbacks?perPage=' + perPage;
         window.location = url;
-        return false;
     });
-
 
     $(document).on('click', '.pagination a', function(event){
         event.preventDefault();
