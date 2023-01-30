@@ -1,6 +1,14 @@
 $(document).ready(function(){
     console.log('document ready!');
 
+    $('#perPage-select').on('change', function () {
+        let perPage = $(this).val();
+        let url = '/admin/feedbacks?page=1&perPage=' + perPage;
+        window.location = url;
+        return false;
+    });
+
+
     $(document).on('click', '.pagination a', function(event){
         event.preventDefault();
         var page = $(this).attr('href');

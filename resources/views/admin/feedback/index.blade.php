@@ -10,10 +10,5 @@
 @endsection
 
 @section('js')
-    <script>
-        document.getElementById('perPage-select').onchange = function() {
-            window.location = "{{$feedbacks->url(1)}}&perPage=" + this.value;
-        };
-    </script>
     @vite('resources/js/feedbacks/admin_index.js')
 @endsection
