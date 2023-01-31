@@ -67,7 +67,7 @@ class FeedbackPolicy
      * @param  \App\Models\Feedback  $feedback
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, Feedback $feedback)
+    public function delete(User $user)
     {
         return $user->role_id == Role::IS_ADMIN;
     }

@@ -80,7 +80,10 @@ class FeedbachController extends Controller
 
     public function process($id)
     {
-        $feed = Feedback::find($id);
+        $feed = Feedback::findOrFail($id);
+
+        $this->authorize('process', [Feedback::class, $feed]);
+
         if ($feed){
             $feed->processed = true;
             $feed->save();
@@ -97,6 +100,7 @@ class FeedbachController extends Controller
      */
     public function destroy($id)
     {
+        $this->authorize('delete', Feedback::class);
         Feedback::destroy($id);
         return back();
     }

@@ -33,7 +33,6 @@ class FeedbachController extends Controller
     {
         $this->authorize('create', Feedback::class);
 
-
         $data = $request->validate([
             'subject' => 'required|max:255',
             'message' => 'required|max:1000',
@@ -50,10 +49,11 @@ class FeedbachController extends Controller
             $feed->attachment = $path;
         }
 
-        $feed->save();
         MailSenderJob::dispatch(config('mail.admin.email'), new NewFeedback($feed))->delay(now()->addMinutes(1));
+        $feed->save();
 
-        return back()->with('success', 'You feedback have been sent, you will recieve a confirming email shortly !');;
+
+        return back()->with('success', 'Your feedback have been sent, you will receive an email once it is processed !');;
     }
 
 }
