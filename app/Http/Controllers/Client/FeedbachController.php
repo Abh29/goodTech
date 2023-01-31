@@ -49,9 +49,8 @@ class FeedbachController extends Controller
             $feed->attachment = $path;
         }
 
-        MailSenderJob::dispatch(config('mail.admin.email'), new NewFeedback($feed))->delay(now()->addMinutes(1));
         $feed->save();
-
+        MailSenderJob::dispatch(config('mail.admin.email'), new NewFeedback($feed));
 
         return back()->with('success', 'Your feedback have been sent, you will receive an email once it is processed !');;
     }

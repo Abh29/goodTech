@@ -2,7 +2,6 @@
 
 namespace App\Jobs;
 
-use App\Models\Feedback;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
